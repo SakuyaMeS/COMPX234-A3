@@ -6,7 +6,10 @@ class TupleSpcace:
         self.lock = threading.Lock
 
         def read(self, key):
-            pass
+            with self.lock:
+                if key in self.data:
+                    return True, self.data[key]
+                else: return False, None
 
         def get(self, key):
             pass
