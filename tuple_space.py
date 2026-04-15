@@ -24,5 +24,5 @@ class TupleSpace:
             if key in self.data:
                 return False
             else: 
-                self[key] = value
+                self.data[key] = value
                 return True
