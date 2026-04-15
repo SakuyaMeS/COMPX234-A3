@@ -12,7 +12,12 @@ class TupleSpcace:
                 else: return False, None
 
         def get(self, key):
-            pass
+            with self.lock:
+                if key in self.data:
+                    value = self.data[key]
+                    del self.data[key]
+                    return True, value
+                else: return False, None
 
         def put(self, key, value):
             pass
