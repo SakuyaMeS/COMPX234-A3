@@ -1,9 +1,9 @@
 import threading
 
 class TupleSpace:
-    def _init_(self):
+    def __init__(self):
         self.data = {}
-        self.lock = threading.Lock
+        self.lock = threading.Lock()
 
     def read(self, key):
         with self.lock:
