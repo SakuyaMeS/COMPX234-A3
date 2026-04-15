@@ -20,4 +20,9 @@ class TupleSpcace:
                 else: return False, None
 
         def put(self, key, value):
-            pass
+            with self.lock:
+                if key in self.data:
+                    return False
+                else: 
+                    self[key] = value
+                    return True
