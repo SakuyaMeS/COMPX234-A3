@@ -161,3 +161,7 @@ def main():
         sys.exit(1)
 
     port = int(sys.argv[1])
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind(("", port))
+    server_socket.listen(5)
+    print(f"Server started on port {port}")
