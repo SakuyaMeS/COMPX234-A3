@@ -165,3 +165,6 @@ def main():
     server_socket.bind(("", port))
     server_socket.listen(5)
     print(f"Server started on port {port}")
+
+    stats_thread = threading.Thread(target=print_stats, daemon=True)
+    stats_thread.start()
