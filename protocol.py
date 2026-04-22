@@ -61,3 +61,15 @@ def recv_exact(sock, n):
         data += chunk
 
     return data.decode()
+
+def recv_message(sock):
+    length_str = recv_exact(sock, 3)
+    if length_str is None:
+        return None
+    
+    total_length = int(length_str)
+    remaining = recv_exact(sock, total_length-3)
+    if remaining is None:
+        return None
+    
+    return length_str + remaining
