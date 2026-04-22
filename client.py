@@ -14,6 +14,9 @@ def main():
     if not os.path.exists(input_file_path):
         print(f"Error: Input file '{input_file_path}' does not exist.")
         sys.exit(1)
+    
+    with open(input_file_path, "r") as file:
+        lines = file.readlines()
 
 
 if __name__ == "__main__":
