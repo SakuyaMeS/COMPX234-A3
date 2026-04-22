@@ -127,4 +127,30 @@ def handle_request(message):
             else:
                 increment_stat("error_count")
                 return f"ERR {key} does not exist"
+
+        elif op == "P":
+            increment_stat("put_count")
             
+            if len(parts) < 3:
+                increment_stat("error_count")
+                return f"ERR Invalid PUT"
+            
+            value = parts[2]
+
+            if len(value) > 999:
+                increment_stat("error_count")
+                return f"ERR Value too long"
+            
+            if len(key + " " + value) > 970:
+                increment_stat("error_count")
+                return f"ERR Tuple too long"
+            
+            if key in tuple_space:
+                increment_stat("error_count") 
+                return f"ERR {key} already exists"
+            
+            tuple_space[key] = value
+            return f"OK ({key}, {value}) added"
+    
+    increment_stat("error_count")
+    return "ERR Unknown operation"
