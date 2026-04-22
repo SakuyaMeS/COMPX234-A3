@@ -50,3 +50,14 @@ def encode_response(success, command, key, value=None):
         
     message = f"{len(body) + 3:03d}{body}"
     return message
+
+def recv_exact(sock, n):
+    data = b""
+
+    while len(data) < n:
+        chunk = sock.recv(n - len(data))
+        if not chunk:
+            return None
+        data += chunk
+
+    return data.decode()
