@@ -81,9 +81,31 @@ def handle_client(client_socket):
             
             message = message_buffer.decode()
             response = handle_request(message)
-            
-            break
+
+            response_message = f"{len(response) + 4:03d} {response}"
+            client_socket.sendall(response_message.encode())
     except (socket.error, ValueError):
         pass
     finally:
         client_socket.close()
+
+def handle_request(message):
+    global tuple_space
+    increment_stat("total_operations")
+
+    if len(message) < 3:
+        increment_stat("error_count")
+        return "ERR Invalid message"
+    
+    parts = message.split(" ", 2)
+    if len(parts) < 2:
+        increment_stat("error_count")
+        return "ERR Invalid message"
+    
+    op = parts[0]
+    key = parts[1]
+
+    if len(key) > 999:
+        increment_stat("error_count")
+        return "ERR Key too long"
+    
