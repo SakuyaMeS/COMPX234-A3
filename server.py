@@ -109,3 +109,12 @@ def handle_request(message):
         increment_stat("error_count")
         return "ERR Key too long"
     
+    with lock:
+        if op == "R":
+            increment_stat("read_count")
+            if key in tuple_space:
+                value = tuple_space[key]
+                return f"OK ({key}, {value}) read"
+            else:
+                increment_stat("error_count")
+                return f"ERR {key} does not exist"
