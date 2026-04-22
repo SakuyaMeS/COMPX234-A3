@@ -154,3 +154,10 @@ def handle_request(message):
     
     increment_stat("error_count")
     return "ERR Unknown operation"
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python3 server.py <port>")
+        sys.exit(1)
+
+    port = int(sys.argv[1])
