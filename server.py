@@ -64,3 +64,23 @@ def print_stats():
             print(f"GETs: {get_count}")
             print(f"PUTs: {put_count}")
             print(f"Errors: {error_count}\n")
+
+def handle_client(client_socket):
+    global tuple_space
+    
+    increment_stat("total_clients")
+    try:
+        while True:
+            size_buffer = receive_n(client_socket, 3)
+            if len(client_socket) < 3:
+                break
+            message_size = int(size_buffer.decode())
+            message_buffer = receive_n(client_socket, message_size - 3)
+            if len(message_buffer) < message_size - 3:
+                break
+
+            break
+    except (socket.error, ValueError):
+        pass
+    finally:
+        client_socket.close()
