@@ -21,5 +21,16 @@ def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((hostname, port))
 
+    try:
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+    except (socket.error, ValueError) as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+    finally:
+        sock.close()
+
 if __name__ == "__main__":
     main()
