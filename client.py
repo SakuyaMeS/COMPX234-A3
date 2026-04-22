@@ -26,6 +26,10 @@ def main():
             line = line.strip()
             if not line:
                 continue
+
+            parts = line.split(" ", 2)
+            cmd = parts[0]
+            message = ""
     except (socket.error, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)
