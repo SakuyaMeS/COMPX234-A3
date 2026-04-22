@@ -78,7 +78,10 @@ def handle_client(client_socket):
             message_buffer = receive_n(client_socket, message_size - 3)
             if len(message_buffer) < message_size - 3:
                 break
-
+            
+            message = message_buffer.decode()
+            response = handle_request(message)
+            
             break
     except (socket.error, ValueError):
         pass
