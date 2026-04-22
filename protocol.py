@@ -29,3 +29,24 @@ def decode_request(message):
         return "PUT", key, value
     else:
         raise ValueError("Invalid request format")
+    
+def encode_response(success, command, key, value=None):
+    if success:
+        if command == "READ":
+            body = f" OK ({key}, {value}) read"
+        elif command == "GET":
+            body = f" OK ({key}, {value}) removed"
+        elif command == "PUT":
+            body = f" OK ({key}, {value}) added"
+        else:
+            raise ValueError("Invalid command")
+    else:
+        if command == "PUT":
+            body = f" ERR {key} already exists"
+        elif command == "READ" or command == "GET":
+            body = f" ERR {key} does not exist"
+        else:
+            raise ValueError("Invalid command")
+        
+    message = f"{len(body) + 3:03d}{body}"
+    return message
