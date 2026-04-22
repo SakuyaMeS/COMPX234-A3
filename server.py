@@ -168,3 +168,18 @@ def main():
 
     stats_thread = threading.Thread(target=print_stats, daemon=True)
     stats_thread.start()
+
+    try:
+        while True:
+            (client_socket, address) = server_socket.accept()
+            print(f"Connection from {address} accepted.")
+            print(f"Create a new thread that will deal with the client which just connected.")
+            client_thread = threading.Thread(target=handle_client, args=(client_socket,))
+            client_thread.start()
+    except KeyboardInterrupt:
+        print("Shutting down server...")
+    finally:
+        server_socket.close()
+
+if __name__ == "__main__":
+    main()    
