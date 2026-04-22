@@ -72,7 +72,7 @@ def handle_client(client_socket):
     try:
         while True:
             size_buffer = receive_n(client_socket, 3)
-            if len(client_socket) < 3:
+            if len(size_buffer) < 3:
                 break
             message_size = int(size_buffer.decode())
             message_buffer = receive_n(client_socket, message_size - 3)
@@ -122,7 +122,7 @@ def handle_request(message):
         elif op == "G":
             increment_stat("get_count")
             if key in tuple_space:
-                value = tuple_space.pop[key]
+                value = tuple_space.pop(key)
                 return f"OK ({key}, {value}) removed"
             else:
                 increment_stat("error_count")
