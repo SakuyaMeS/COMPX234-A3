@@ -18,6 +18,8 @@ def main():
     with open(input_file_path, "r") as file:
         lines = file.readlines()
 
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((hostname, port))
 
 if __name__ == "__main__":
     main()
