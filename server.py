@@ -93,6 +93,8 @@ def handle_request(message):
     global tuple_space
     increment_stat("total_operations")
 
+    message = message.strip()
+
     if len(message) < 3:
         increment_stat("error_count")
         return "ERR Invalid message"
@@ -151,9 +153,10 @@ def handle_request(message):
             
             tuple_space[key] = value
             return f"OK ({key}, {value}) added"
-    
-    increment_stat("error_count")
-    return "ERR Unknown operation"
+        
+        else:
+            increment_stat("error_count")
+            return "ERR Unknown operation"
 
 def main():
     if len(sys.argv) != 2:
