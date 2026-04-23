@@ -58,7 +58,12 @@ def main():
                 
                 size = 7 + len(key) + len(value)
                 message = f"{size:03d} P {key} {value}"
+            
+            else:
+                print(f"Error: Unknown command in line '{line}'")
+                continue
 
+            sock.sendall(message.encode())
     except (socket.error, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)
