@@ -77,7 +77,10 @@ def main():
                 if not chunk:
                     raise ValueError("Incomplete response body")
                 response_buffer += chunk
-                
+            
+            response = response_buffer.decode().strip()
+            print(f"{line}: {response}")
+            
     except (socket.error, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)
