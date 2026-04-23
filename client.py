@@ -64,6 +64,20 @@ def main():
                 continue
 
             sock.sendall(message.encode())
+
+            size_buffer = sock.recv(3)
+            if len(size_buffer) < 3:
+                raise ValueError("Incomplete response size")
+            
+            response_size = int(size_buffer.decode())
+            response_buffer = b""
+
+            while len(response_buffer) < response_size - 3:
+                chunk = sock.recv(response_size - 3 - len(response_buffer))
+                if not chunk:
+                    raise ValueError("Incomplete response body")
+                response_buffer += chunk
+                
     except (socket.error, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)
