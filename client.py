@@ -30,6 +30,19 @@ def main():
             parts = line.split(" ", 2)
             cmd = parts[0]
             message = ""
+
+            if cmd == "READ" or cmd == "GET":
+                if len(parts) != 2:
+                    print(f"Error: Invalid format in line '{line}'")
+                    continue
+
+                key = parts[1]
+                size = 6 + len(key)
+
+                if cmd == "READ":
+                    message = f"{size:03d} R {key}"
+                elif cmd == "GET":
+                    message = f"{size:03d} G {key}"
     except (socket.error, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)
