@@ -43,6 +43,22 @@ def main():
                     message = f"{size:03d} R {key}"
                 elif cmd == "GET":
                     message = f"{size:03d} G {key}"
+            
+            elif cmd == "PUT":
+                if len(parts) != 3:
+                    print(f"Error: Invalid format in line '{line}'")
+                    continue
+
+                key = parts[1]
+                value = parts[2]
+                
+                if len(key + " " + value) > 970:
+                    print(f"Error: Tuple too long in line '{line}'")
+                    continue
+                
+                size = 7 + len(key) + len(value)
+                message = f"{size:03d} P {key} {value}"
+
     except (socket.error, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)
